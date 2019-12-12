@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Share View Controller-->
+        <scene sceneID="Pom-Bu-7ip">
+            <objects>
+                <viewController storyboardIdentifier="ShareViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zjr-Mc-Ko5" customClass="ShareViewController" customModule="daily" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kaw-Bu-cOm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q27-3h-iAA">
+                                <rect key="frame" x="10" y="802" width="394" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="hma-VV-1mQ"/>
+                                </constraints>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelAction:" destination="Zjr-Mc-Ko5" eventType="touchUpInside" id="T2c-xb-X0h"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iLr-8u-XOV">
+                                <rect key="frame" x="10" y="554" width="394" height="238"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="238" id="8BZ-Zb-Bgc"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3wc-RQ-hnO">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="19" minY="24" maxX="19" maxY="24"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gcW-ga-KTG">
+                                        <rect key="frame" x="19" y="24" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aZU-ff-NpU">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="q27-3h-iAA" firstAttribute="leading" secondItem="8c6-2l-Kl8" secondAttribute="leading" constant="10" id="NbY-de-wZ6"/>
+                            <constraint firstItem="q27-3h-iAA" firstAttribute="top" secondItem="iLr-8u-XOV" secondAttribute="bottom" constant="10" id="NeB-cS-H0X"/>
+                            <constraint firstItem="iLr-8u-XOV" firstAttribute="leading" secondItem="8c6-2l-Kl8" secondAttribute="leading" constant="10" id="XQR-64-LBp"/>
+                            <constraint firstItem="q27-3h-iAA" firstAttribute="bottom" secondItem="8c6-2l-Kl8" secondAttribute="bottom" constant="-10" id="bWR-dE-JB6"/>
+                            <constraint firstItem="8c6-2l-Kl8" firstAttribute="trailing" secondItem="iLr-8u-XOV" secondAttribute="trailing" constant="10" id="d5w-Ha-d7I"/>
+                            <constraint firstItem="8c6-2l-Kl8" firstAttribute="trailing" secondItem="q27-3h-iAA" secondAttribute="trailing" constant="10" id="odQ-2i-1yj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8c6-2l-Kl8"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelBtn" destination="q27-3h-iAA" id="cMo-QV-8ao"/>
+                        <outlet property="collectionView" destination="iLr-8u-XOV" id="DuX-Kn-p07"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NPe-P4-Wb1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-388" y="87"/>
+        </scene>
+    </scenes>
+</document>

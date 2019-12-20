@@ -29,6 +29,25 @@ extension String {
         let day = components.day ?? 1
         return "\(SHORT_MONTHS[month-1]) \(day), \(year)"
     }
+    
+    //MARK:时间格式化
+    func weekMonthDayYearHourMinute() ->String{
+        LogUtils.info(self)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = formatter.date(from: self)
+        if date == nil {
+            return ""
+        }
+        let components =  Calendar.init(identifier: .gregorian).dateComponents(Set<Calendar.Component>([.weekday,.year, .month, .day,.hour,.minute,]), from: date!)
+        let weekDay = components.weekday ?? 1
+        let year = components.year ?? 2019
+        let month = components.month ?? 1
+        let day = components.day ?? 1
+        let hour = components.hour ?? 0
+        let minute = components.minute ?? 0
+        return "\(WEEKS[weekDay-1]) \(MONTHS[month-1]) \(day), \(year),\(String(format: "%02d", arguments: [hour])):\(String(format: "%02d", arguments: [minute]))"
+    }
 }
 
 

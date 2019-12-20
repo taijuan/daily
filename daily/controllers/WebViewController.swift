@@ -37,24 +37,27 @@ class WebViewController: UIViewController {
         self.webView.backgroundColor = .white
         self.webView.load(URLRequest(url: URL(string: self.url)!))
         self.webView.navigationDelegate = self
+        self.setUserAgent()
     }
     
     override func viewDidLayoutSubviews() {
         self.webView.frame = self.webViewContainer.bounds
     }
+    
+    //MARK:设置UserAgent标志com.chinadaily
+    func setUserAgent(){
+        self.webView.evaluateJavaScript("navigator.userAgent") { (userAgent, error) in
+            self.webView.customUserAgent = "\(userAgent ?? "iPhone;") com.chinadaily"
+        }
+    }
 }
 
 extension WebViewController:WKNavigationDelegate{
-    // 页面开始加载时调用
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!){
-        self.navigationItem.title = "加载中..."
-    }
-    // 当内容开始返回时调用
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!){
-        
-    }
     // 页面加载完成之后调用
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!){
+        if self.xTitle.isEmpty{
+            self.titleLabel.text = webView.title
+        }
         self.loadingDialog.hideLoading()
     }
     // 页面加载失败时调用
@@ -64,11 +67,34 @@ extension WebViewController:WKNavigationDelegate{
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         let url = navigationAction.request.url?.absoluteString ?? ""
-        if self.url != url && url.contains(".pdf"){
+        LogUtils.success(url)
+        LogUtils.success(navigationAction.targetFrame == nil)
+        if self.url == url || url.isEmpty {
+            decisionHandler(.allow)
+            return
+        }
+        if url.contains(".pdf"){
             self.navigationController?.pushViewController(webViewController("ePaper", url), animated: true)
             decisionHandler(.cancel)
-        }else{
-            decisionHandler(.allow)
+            return
         }
+        
+        if url.contains(ImageDNS) && navigationAction.targetFrame == nil{
+            self.navigationController?.pushViewController(webViewController("", url), animated: true)
+            decisionHandler(.cancel)
+            return
+        }
+        if url.contains("mailto:") && navigationAction.targetFrame == nil {
+            if let url = URL(string: url) {
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url, options: [:],completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+            decisionHandler(.cancel)
+            return
+        }
+        decisionHandler(.allow)
     }
 }

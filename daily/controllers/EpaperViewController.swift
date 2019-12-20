@@ -21,7 +21,7 @@ class EpaperViewController: BaseViewController {
     }
     @IBOutlet weak var timeLabel: UILabel!
     
-    private lazy var  loadingDialog = LoadingView(self.pagerView)
+    private lazy var  loadingDialog = LoadingView(self.view)
     private let ePaperViewModel = EPaperViewModel()
     private var data = Array<EPaper>()
     override func viewDidLoad() {
@@ -32,17 +32,19 @@ class EpaperViewController: BaseViewController {
         self.ePaperViewModel.data.observeOn(MainScheduler.instance).subscribe(onNext: { (result) in
             switch result {
             case .none:break
-            case .error(_): break
+            case .error(_):
+                self.loadingDialog.hideLoading()
+                break
             case .refreshError(_):break
             case .loadMoreError(_):break
             case .success(let success):
                 self.data = success
                 self.pagerView.reloadData()
+                self.loadingDialog.hideLoading()
                 break
             case .refreshSuccess(_):break
             case .loadMoreSuccess(_):break
             }
-            self.loadingDialog.hideLoading()
         }).disposed(by: disposeBag)
         self.ePaperViewModel.loadData()
     }

@@ -14,7 +14,13 @@ extension UITableView {
    
     //MARK:刷新UI
     func registerHeader(action:@escaping ()->Void){
-        self.mj_header = MJRefreshNormalHeader()
+        let header = MJRefreshNormalHeader()
+        header.setTitle("Pull down to refresh", for: .idle)
+        header.setTitle("Pull down to refresh", for: .pulling)
+        header.setTitle("Release to refresh", for: .willRefresh)
+        header.setTitle("Loading...", for: .refreshing)
+        header.lastUpdatedTimeLabel.isHidden = true
+        self.mj_header = header
         self.mj_header.isAutomaticallyChangeAlpha = true
         self.mj_header.refreshingBlock = {
             action()
@@ -24,7 +30,11 @@ extension UITableView {
     
     //MARK:加载更多UI
     func registerFooter(action:@escaping ()->Void){
-        self.mj_footer = MJRefreshAutoNormalFooter()
+        let footer = MJRefreshAutoNormalFooter()
+        footer.setTitle("Tap or pull up to load more", for: .idle)
+        footer.setTitle("Loading...", for: .refreshing)
+        footer.setTitle("No more data", for: .noMoreData)
+        self.mj_footer = footer
         self.mj_footer.refreshingBlock = {
             action()
         }
